@@ -41,6 +41,24 @@ public class AuthService {
         return SignUpResponse.from(user.getUsername(), user.getNickname(), user.getRole());
     }
 
+    public SignUpResponse signupAdmin(SignUpRequest request) {
+
+        if (userRepository.existsByUsername(request.getUsername())) {
+            throw new BaseException(USER_ALREADY_EXISTS);
+        }
+
+        User user = User.builder()
+                .username(request.getUsername())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .nickname(request.getNickname())
+                .role(Role.ADMIN)
+                .build();
+
+        userRepository.save(user);
+
+        return SignUpResponse.from(user.getUsername(), user.getNickname(), user.getRole());
+    }
+
     public TokenResponse login(LoginRequest request) {
 
         User user = userRepository.findByUsername(request.getUsername())

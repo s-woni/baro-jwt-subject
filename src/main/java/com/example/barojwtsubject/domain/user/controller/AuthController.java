@@ -27,6 +27,15 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
+    // 테스트 용도 admin 생성용
+    @PostMapping("/signup/admin")
+    public ResponseEntity<SignUpResponse> signupAdmin(@RequestBody SignUpRequest request) {
+
+        SignUpResponse response = authService.signupAdmin(request);
+
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest request) {
 
